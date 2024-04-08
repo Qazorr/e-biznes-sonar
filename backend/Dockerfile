@@ -1,4 +1,7 @@
-FROM golang:latest
+FROM golang:1.22
+
+RUN useradd -u 10001 appuser
+USER appuser
 
 WORKDIR /app
 
@@ -7,7 +10,11 @@ COPY go.sum .
 
 RUN go mod download
 
-COPY . .
+COPY controllers controllers
+COPY models models
+COPY helpers helpers
+COPY database.db database.db
+COPY main.go .
 
 RUN go build -o main .
 

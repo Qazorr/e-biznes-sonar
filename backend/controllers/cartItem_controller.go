@@ -8,6 +8,10 @@ import (
 	"gorm.io/gorm"
 )
 
+var cartItemErrors = map[string]string{
+	"cartItemNotFound": "CartItem not found",
+}
+
 type CartItemController struct {
 	DB *gorm.DB
 }
@@ -22,7 +26,7 @@ func (cic *CartItemController) GetCartItemByID(c echo.Context) error {
 	id := c.Param("id")
 	var cartItem models.CartItem
 	if err := cic.DB.First(&cartItem, id).Error; err != nil {
-		return c.JSON(http.StatusNotFound, map[string]string{"error": "CartItem not found"})
+		return c.JSON(http.StatusNotFound, map[string]string{"error": cartItemErrors["cartItemNotFound"]})
 	}
 	return c.JSONPretty(http.StatusOK, cartItem, "  ")
 }
@@ -49,7 +53,7 @@ func (cic *CartItemController) UpdateCartItem(c echo.Context) error {
 	id := c.Param("id")
 	var cartItem models.CartItem
 	if err := cic.DB.First(&cartItem, id).Error; err != nil {
-		return c.JSON(http.StatusNotFound, map[string]string{"error": "CartItem not found"})
+		return c.JSON(http.StatusNotFound, map[string]string{"error": cartItemErrors["cartItemNotFound"]})
 	}
 	if err := c.Bind(&cartItem); err != nil {
 		return err
@@ -62,7 +66,7 @@ func (cic *CartItemController) DeleteCartItem(c echo.Context) error {
 	id := c.Param("id")
 	var cartItem models.CartItem
 	if err := cic.DB.First(&cartItem, id).Error; err != nil {
-		return c.JSON(http.StatusNotFound, map[string]string{"error": "CartItem not found"})
+		return c.JSON(http.StatusNotFound, map[string]string{"error": cartItemErrors["cartItemNotFound"]})
 	}
 
 	// reversed to adding - if quantity is 0, delete it else decrement

@@ -9,32 +9,38 @@ import (
 
 func BindProductController(e *echo.Echo, db *gorm.DB) {
 	productController := &controllers.ProductController{DB: db}
+	const productRoute = "/products"
+	const productIDRoute = productRoute + "/:id"
 
-	e.GET("/products", productController.GetAllProducts)
-	e.GET("/products/:id", productController.GetProductByID)
-	e.POST("/products", productController.CreateProduct)
-	e.PUT("/products/:id", productController.UpdateProduct)
-	e.DELETE("/products/:id", productController.DeleteProduct)
+	e.GET(productRoute, productController.GetAllProducts)
+	e.GET(productIDRoute, productController.GetProductByID)
+	e.POST(productRoute, productController.CreateProduct)
+	e.PUT(productIDRoute, productController.UpdateProduct)
+	e.DELETE(productIDRoute, productController.DeleteProduct)
 }
 
 func BindCartItemController(e *echo.Echo, db *gorm.DB) {
 	cartItemController := &controllers.CartItemController{DB: db}
+	const cartItemRoute = "/cart"
+	const cartItemIDRoute = cartItemRoute + "/:id"
 
-	e.GET("/cart", cartItemController.GetAllCartItems)
-	e.GET("/cart/:id", cartItemController.GetCartItemByID)
-	e.POST("/cart", cartItemController.CreateCartItem)
-	e.PUT("/cart/:id", cartItemController.UpdateCartItem)
-	e.DELETE("/cart/:id", cartItemController.DeleteCartItem)
+	e.GET(cartItemRoute, cartItemController.GetAllCartItems)
+	e.GET(cartItemIDRoute, cartItemController.GetCartItemByID)
+	e.POST(cartItemRoute, cartItemController.CreateCartItem)
+	e.PUT(cartItemIDRoute, cartItemController.UpdateCartItem)
+	e.DELETE(cartItemIDRoute, cartItemController.DeleteCartItem)
 }
 
 func BindCategoryController(e *echo.Echo, db *gorm.DB) {
 	categoryController := &controllers.CategoryController{DB: db}
+	const categoryRoute = "/categories"
+	const categoryIDRoute = categoryRoute + "/:id"
 
-	e.GET("/categories", categoryController.GetAllCategories)
-	e.GET("/categories/:id", categoryController.GetCategoryByID)
-	e.POST("/categories", categoryController.CreateCategory)
-	e.PUT("/categories/:id", categoryController.UpdateCategory)
-	e.DELETE("/categories/:id", categoryController.DeleteCategory)
+	e.GET(categoryRoute, categoryController.GetAllCategories)
+	e.GET(categoryIDRoute, categoryController.GetCategoryByID)
+	e.POST(categoryRoute, categoryController.CreateCategory)
+	e.PUT(categoryIDRoute, categoryController.UpdateCategory)
+	e.DELETE(categoryIDRoute, categoryController.DeleteCategory)
 }
 
 func BindPaymentController(e *echo.Echo, db *gorm.DB) {

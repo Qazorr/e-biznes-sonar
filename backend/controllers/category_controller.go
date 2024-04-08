@@ -8,6 +8,10 @@ import (
 	"gorm.io/gorm"
 )
 
+var categoryErrors = map[string]string{
+	"categoryNotFound": "Category not found",
+}
+
 type CategoryController struct {
 	DB *gorm.DB
 }
@@ -22,7 +26,7 @@ func (cc *CategoryController) GetCategoryByID(c echo.Context) error {
 	id := c.Param("id")
 	var category models.Category
 	if err := cc.DB.First(&category, id).Error; err != nil {
-		return c.JSON(http.StatusNotFound, map[string]string{"error": "Category not found"})
+		return c.JSON(http.StatusNotFound, map[string]string{"error": categoryErrors["categoryNotFound"]})
 	}
 	return c.JSONPretty(http.StatusOK, category, "  ")
 }
@@ -40,7 +44,7 @@ func (cc *CategoryController) UpdateCategory(c echo.Context) error {
 	id := c.Param("id")
 	var category models.Category
 	if err := cc.DB.First(&category, id).Error; err != nil {
-		return c.JSON(http.StatusNotFound, map[string]string{"error": "Category not found"})
+		return c.JSON(http.StatusNotFound, map[string]string{"error": categoryErrors["categoryNotFound"]})
 	}
 	if err := c.Bind(&category); err != nil {
 		return err
@@ -53,7 +57,7 @@ func (cc *CategoryController) DeleteCategory(c echo.Context) error {
 	id := c.Param("id")
 	var category models.Category
 	if err := cc.DB.First(&category, id).Error; err != nil {
-		return c.JSON(http.StatusNotFound, map[string]string{"error": "Category not found"})
+		return c.JSON(http.StatusNotFound, map[string]string{"error": categoryErrors["categoryNotFound"]})
 	}
 	cc.DB.Delete(&category)
 	return c.NoContent(http.StatusNoContent)
