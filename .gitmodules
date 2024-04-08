@@ -1,0 +1,4 @@
+[submodule "app"]
+	path = app
+	url = git@github.com:Qazorr/e-biznes.git
+	branch = react
